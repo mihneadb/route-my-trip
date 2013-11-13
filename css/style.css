@@ -1,0 +1,26 @@
+html, body {
+    background-color: #fdfdfd;
+}
+
+#map-canvas {
+    height: 500px;
+    width: 500px;
+    border: 1px solid black;
+}
+
+#source {
+    width: 500px;
+    height: 30px;
+    border-radius: 3px;
+    margin-bottom: 5px;
+}
+
+#container {
+    box-shadow: 0px 3px 8px #aaa;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background-color: rgba(0, 0, 0, 0.05);
+}
+

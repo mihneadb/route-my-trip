@@ -4,15 +4,29 @@
     <meta charset="UTF-8">
     <title>Plan my route</title>
 
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="css/foundation.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
-    <h1>Plan my route</h1>
-    <input id="source" placeholder="Leave from ..">
-    <div id="map-canvas"></div>
+    <div class="large-10 columns large-centered" id="container">
+        <div class="row text-center">
+            <h1>Plan my route</h1>
+        </div>
+
+        <div class="row">
+            <div class="large-6 columns">
+                <input id="source" placeholder="Leave from ..">
+                <div id="map-canvas"></div>
+            </div>
+            <div class="offset-by-two large-4 columns">
+                <h2>Options here</h2>
+            </div>
+        </div>
+    </div>
 
     <script src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=places"></script>
-    <script src="app.js"></script>
+    <script src="js/app.js"></script>
 </body>
 </html>
 
