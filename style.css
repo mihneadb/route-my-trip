@@ -3,3 +3,10 @@
     width: 500px;
 }
 
+#source {
+    width: 500px;
+    height: 30px;
+    border-radius: 3px;
+    margin-bottom: 5px;
+}
+
