@@ -8,6 +8,14 @@ var input = document.getElementById("source");
 
 var coordinates = [];
 
+function computeDistance(route) {
+    sum = 0;
+    for (var i = 0; i < route.legs.length; i++) {
+        sum += route.legs[i].distance.value;
+    }
+    return sum;
+}
+
 function calcRoute() {
     var waypoints = [];
     for (var i = 1; i < coordinates.length - 1; i++) {
@@ -30,6 +38,8 @@ function calcRoute() {
             return;
         }
         directionsDisplay.setDirections(result);
+
+        document.getElementById("distance").innerHTML = computeDistance(result.routes[0]) + "m";
     });
 }
 
