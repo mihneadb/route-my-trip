@@ -153,8 +153,8 @@ function centerMap(address) {
 
 function initialize() {
     mapOptions = {
-        center: new google.maps.LatLng(-34.397, 150.644),
-        zoom: 13,
+        center: new google.maps.LatLng(44.434721, 26.055064),
+        zoom: 15,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         disableDefaultUI: true,
     };
