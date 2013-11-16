@@ -164,6 +164,7 @@ function initialize() {
     autocomplete = new google.maps.places.Autocomplete(input);
 
     google.maps.event.addListener(map, "click", function(e) {
+        tooltip.classList.add("hide");
         var pos = new google.maps.LatLng(e.latLng.lat(), e.latLng.lng());
         var marker = new google.maps.Marker({
             position: pos,
@@ -190,6 +191,12 @@ function initialize() {
     directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);
     directionsDisplay.setMap(map);
 
+    // position & display tooltip
+    var mapCanvas = document.getElementById("map-canvas");
+    var tooltip = document.getElementById("tooltip");
+    tooltip.classList.toggle("hide");
+    tooltip.style.top = mapCanvas.offsetTop + mapCanvas.offsetHeight / 2 - tooltip.offsetHeight / 2 + "px";
+    tooltip.style.left = mapCanvas.offsetLeft + mapCanvas.offsetWidth / 2 - tooltip.offsetWidth / 2 + "px";
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
