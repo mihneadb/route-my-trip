@@ -3,6 +3,11 @@ var map = null;
 var autocomplete = null;
 var directionsService = null;
 var directionsDisplay = null;
+var route = null;
+
+var clearBtn = document.getElementById("clear");
+var exportBtn = document.getElementById("export");
+var distanceText = document.getElementById("distance");
 
 var input = document.getElementById("source");
 
@@ -39,11 +44,27 @@ function calcRoute() {
             return;
         }
         hideAllMarkers();
+        directionsDisplay.setMap(map);
         directionsDisplay.setDirections(result);
 
+        route = result.routes[0];
+
         var distance = computeDistance(result.routes[0]);
-        document.getElementById("distance").innerHTML = distance / 1000 + "km";
+        distanceText.innerHTML = distance / 1000 + "km";
+
+        if (exportBtn.classList.contains("hide")) {
+            exportBtn.classList.toggle("hide");
+        }
     });
+}
+
+function stripTags(text) {
+    text = text.replace(/\<div/g, ". <p");
+    text = text.replace(/\<\/div/g, ". </p");
+    var div = document.createElement("div");
+    div.innerHTML = text;
+    var stripped = div.textContent || div.innerText || "";
+    return stripped;
 }
 
 function hideAllMarkers() {
@@ -56,6 +77,68 @@ function clear() {
     hideAllMarkers();
     markers = [];
     coordinates = [];
+    directionsDisplay.setMap(null);
+    distanceText.innerHTML = "";
+    if (!exportBtn.classList.contains("hide")) {
+        exportBtn.classList.toggle("hide");
+    }
+}
+
+function makeStepNode(step) {
+    var distance = step.distance.value; // meters
+    var duration = step.duration.value; // seconds
+    var instructions = stripTags(step.instructions); // string
+
+    var node = document.createElement("step");
+
+    var distanceNode = document.createElement("distance");
+    distanceNode.innerHTML = distance;
+    distanceNode.setAttribute("unit", "meter");
+
+    var durationNode = document.createElement("duration");
+    durationNode.innerHTML = duration;
+    durationNode.setAttribute("unit", "second");
+
+    var instructionsNode = document.createElement("instructions");
+    instructionsNode.innerHTML = instructions;
+
+    node.appendChild(instructionsNode);
+    node.appendChild(durationNode);
+    node.appendChild(distanceNode);
+
+    return node;
+}
+
+function stringify(node) {
+    var div = document.createElement("div");
+    div.appendChild(node);
+    return div.innerHTML;
+}
+
+function makeXML(nodes) {
+    var doc = "<?xml version=\"1.0\" ?>";
+    doc += "<route>";
+
+    nodes.forEach(function (node) {
+        doc += stringify(node);
+    })
+
+    doc += "</route>";
+
+    return vkbeautify.xml(doc);
+}
+
+function exportRoute() {
+    var nodes = [];
+    route.legs.forEach(function (leg) {
+        leg.steps.forEach(function (step) {
+            nodes.push(makeStepNode(step));
+        });
+    });
+
+    var xml = makeXML(nodes);
+    var blob = new Blob([xml], {type: "text/plain;charset=utf-8"});
+    saveAs(blob, "route.xml");
 }
 
 function initialize() {
@@ -106,5 +189,5 @@ input.onkeydown = function (e) {
     }
 };
 
-document.getElementById("clear").onclick = clear;
-
+clearBtn.onclick = clear;
+exportBtn.onclick = exportRoute;
