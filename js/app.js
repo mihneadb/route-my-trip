@@ -9,7 +9,8 @@ var clearBtn = document.getElementById("clear");
 var exportBtn = document.getElementById("export");
 var distanceText = document.getElementById("distance");
 
-var input = document.getElementById("source");
+var input = document.getElementById("center");
+var centerBtn = document.getElementById("center-btn");
 
 var coordinates = [];
 var markers = [];
@@ -198,6 +199,9 @@ input.onkeydown = function (e) {
         centerMap(input.value);
     }
 };
+centerBtn.onclick = function() {
+    centerMap(input.value);
+}
 
 clearBtn.onclick = clear;
 exportBtn.onclick = exportRoute;
