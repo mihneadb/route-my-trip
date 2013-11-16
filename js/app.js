@@ -39,7 +39,8 @@ function calcRoute() {
         }
         directionsDisplay.setDirections(result);
 
-        document.getElementById("distance").innerHTML = computeDistance(result.routes[0]) + "m";
+        var distance = computeDistance(result.routes[0]);
+        document.getElementById("distance").innerHTML = distance / 1000 + "km";
     });
 }
 
