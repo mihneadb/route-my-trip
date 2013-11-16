@@ -7,6 +7,7 @@ var directionsDisplay = null;
 var input = document.getElementById("source");
 
 var coordinates = [];
+var markers = [];
 
 function computeDistance(route) {
     sum = 0;
@@ -37,11 +38,24 @@ function calcRoute() {
             alert("Zero results.");
             return;
         }
+        hideAllMarkers();
         directionsDisplay.setDirections(result);
 
         var distance = computeDistance(result.routes[0]);
         document.getElementById("distance").innerHTML = distance / 1000 + "km";
     });
+}
+
+function hideAllMarkers() {
+    for (var i = 0; i < markers.length; i++) {
+        markers[i].setMap(null);
+    }
+}
+
+function clear() {
+    hideAllMarkers();
+    markers = [];
+    coordinates = [];
 }
 
 function initialize() {
@@ -63,6 +77,7 @@ function initialize() {
             title: "Clicked here",
         });
         coordinates.push(pos);
+        markers.push(marker);
 
         if (coordinates.length >= 2) {
             calcRoute();
@@ -90,4 +105,6 @@ input.onkeydown = function (e) {
         console.log("enter");
     }
 };
+
+document.getElementById("clear").onclick = clear;
 
