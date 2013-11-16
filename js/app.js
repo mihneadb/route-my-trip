@@ -141,10 +141,20 @@ function exportRoute() {
     saveAs(blob, "route.xml");
 }
 
+function centerMap(address) {
+    var geocoder = new google.maps.Geocoder();
+    geocoder.geocode({
+        "address": address
+    }, function(results, status) {
+        var loc = results[0].geometry.location;
+        map.setCenter(loc);
+    });
+}
+
 function initialize() {
     mapOptions = {
         center: new google.maps.LatLng(-34.397, 150.644),
-        zoom: 8,
+        zoom: 13,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         disableDefaultUI: true,
     };
@@ -185,7 +195,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
 
 input.onkeydown = function (e) {
     if (e.which == 13) {
-        console.log("enter");
+        centerMap(input.value);
     }
 };
 
