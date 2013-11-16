@@ -51,7 +51,7 @@ function calcRoute() {
         route = result.routes[0];
 
         var distance = computeDistance(result.routes[0]);
-        distanceText.innerHTML = distance / 1000 + "km";
+        distanceText.innerHTML = distance / 1000 + " km";
 
         if (exportBtn.classList.contains("hide")) {
             exportBtn.classList.toggle("hide");

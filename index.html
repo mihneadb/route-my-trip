@@ -14,27 +14,24 @@
             <h1>Route my trip</h1>
         </div>
 
-        <div class="row">
-            <div class="large-6 columns">
-                <div class="row">
-                    <div class="small-8 columns">
+        <div class="row text-center">
+
+                    <div class="small-10 columns">
                         <input id="center" placeholder=" Center map on .."/>
                     </div>
-                    <div class="small-4 columns">
+                    <div class="small-2 columns text-right">
                         <button class="small" id="center-btn">Center</button>
                     </div>
-                </span>
-                <div id="map-canvas"></div>
-            </div>
-            <div class="offset-by-two large-4 columns">
-                <h2>Options here</h2>
-                <p>Total distance: <span id="distance"></span></p>
+        </div>
 
-                <span class="buttons">
-                    <button id="clear">Clear</button>
-                    <button class="hide" id="export">Export</button>
-                </span>
-            </div>
+        <div class="row" id="map-canvas"></div>
+
+        <div class="row text-center">
+            <p>Total distance: <span id="distance"></span></p>
+            <span class="buttons">
+                <button id="clear" class="small">Clear</button>
+                <button class="hide small" id="export">Export</button>
+            </span>
         </div>
     </div>
 

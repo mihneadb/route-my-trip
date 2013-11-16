@@ -4,8 +4,9 @@ html, body {
 
 #map-canvas {
     height: 500px;
-    width: 500px;
-    border: 1px solid black;
+    width: 90%;
+    border: 1px solid gray;
+    margin-bottom: 15px;
 }
 
 #center {
