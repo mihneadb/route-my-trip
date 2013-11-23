@@ -12,8 +12,13 @@ var distanceText = document.getElementById("distance");
 var input = document.getElementById("center");
 var centerBtn = document.getElementById("center-btn");
 
+var markerInputDiv = document.getElementById("marker-input-div");
+var markerInput = document.getElementById("marker-input");
+var markerInputBtn = document.getElementById("marker-input-btn");
+
 var coordinates = [];
 var markers = [];
+var markerNames = [];
 
 function computeDistance(route) {
     sum = 0;
@@ -78,6 +83,7 @@ function clear() {
     hideAllMarkers();
     markers = [];
     coordinates = [];
+    markerNames = [];
     directionsDisplay.setMap(null);
     distanceText.innerHTML = "";
     if (!exportBtn.classList.contains("hide")) {
@@ -94,11 +100,9 @@ function makeStepNode(step) {
 
     var distanceNode = document.createElement("distance");
     distanceNode.innerHTML = distance;
-    distanceNode.setAttribute("unit", "meter");
 
     var durationNode = document.createElement("duration");
     durationNode.innerHTML = duration;
-    durationNode.setAttribute("unit", "second");
 
     var instructionsNode = document.createElement("instructions");
     instructionsNode.innerHTML = instructions;
@@ -118,7 +122,7 @@ function stringify(node) {
 
 function makeXML(nodes) {
     var doc = "<?xml version=\"1.0\" ?>";
-    doc += "<route>";
+    doc += "<route durationUnit=\"second\" distanceUnit=\"meter\">";
 
     nodes.forEach(function (node) {
         doc += stringify(node);
@@ -129,16 +133,37 @@ function makeXML(nodes) {
     return vkbeautify.xml(doc);
 }
 
+function makeLegNode(leg, idx) {
+    var distance = leg.distance.value; // meters
+    var duration = leg.duration.value; // seconds
+    var startAddress = leg.start_address; // string
+    var endAddress = leg.end_address; // string
+    var fromName = markerNames[idx];
+    var toName = markerNames[idx + 1];
+
+    var node = document.createElement("leg");
+    node.setAttribute("distance", distance);
+    node.setAttribute("duration", duration);
+    node.setAttribute("startAddress", startAddress);
+    node.setAttribute("endAddress", endAddress);
+    node.setAttribute("fromName", fromName);
+    node.setAttribute("toName", toName);
+
+    return node;
+}
+
 function exportRoute() {
     var nodes = [];
     route.legs.forEach(function (leg) {
+        var legNode = makeLegNode(leg, nodes.length);
         leg.steps.forEach(function (step) {
-            nodes.push(makeStepNode(step));
+            legNode.appendChild(makeStepNode(step));
         });
+        nodes.push(legNode);
     });
 
     var xml = makeXML(nodes);
-    var blob = new Blob([xml], {type: "text/plain;charset=utf-8"});
+    var blob = new Blob([xml], {type: "text/xml;charset=utf-8"});
     saveAs(blob, "route.xml");
 }
 
@@ -152,6 +177,7 @@ function centerMap(address) {
     });
 }
 
+var waitingForName = false;
 function initialize() {
     mapOptions = {
         center: new google.maps.LatLng(44.434721, 26.055064),
@@ -164,19 +190,46 @@ function initialize() {
     autocomplete = new google.maps.places.Autocomplete(input);
 
     google.maps.event.addListener(map, "click", function(e) {
-        tooltip.classList.add("hide");
-        var pos = new google.maps.LatLng(e.latLng.lat(), e.latLng.lng());
-        var marker = new google.maps.Marker({
-            position: pos,
-            map: map,
-            title: "Clicked here",
-        });
-        coordinates.push(pos);
-        markers.push(marker);
-
-        if (coordinates.length >= 2) {
-            calcRoute();
+        if (!waitingForName) {
+            waitingForName = true;
+        } else {
+            return;
         }
+        tooltip.classList.add("hide");
+
+        // place marker custom title input
+        var x = e.pixel.x;
+        var y = e.pixel.y;
+        markerInputDiv.classList.toggle("hide");
+        markerInputDiv.style.top = mapCanvas.offsetTop + y - markerInputDiv.offsetHeight / 2 + "px";
+        markerInputDiv.style.left = mapCanvas.offsetLeft + x / 2 + "px";
+
+        markerInputBtn.onclick = function () {
+            markerInputDiv.classList.add("hide");
+            waitingForName = false;
+
+            var name = markerInput.value;
+            markerNames.push(name);
+            markerInput.value = "";
+
+            var pos = new google.maps.LatLng(e.latLng.lat(), e.latLng.lng());
+            var marker = new google.maps.Marker({
+                position: pos,
+                map: map,
+                title: name,
+            });
+            coordinates.push(pos);
+            markers.push(marker);
+
+            if (coordinates.length >= 2) {
+                calcRoute();
+            }
+        }
+        markerInput.onkeydown = function (e) {
+            if (e.which == 13) {
+                markerInputBtn.onclick();
+            }
+        };
     });
 
     directionsService = new google.maps.DirectionsService();
@@ -197,6 +250,7 @@ function initialize() {
     tooltip.classList.toggle("hide");
     tooltip.style.top = mapCanvas.offsetTop + mapCanvas.offsetHeight / 2 - tooltip.offsetHeight / 2 + "px";
     tooltip.style.left = mapCanvas.offsetLeft + mapCanvas.offsetWidth / 2 - tooltip.offsetWidth / 2 + "px";
+    tooltip.onclick = function () { tooltip.classList.add("hide"); };
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
