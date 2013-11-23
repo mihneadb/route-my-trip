@@ -1,0 +1,84 @@
+<?xml version="1.0" ?>
+<route durationunit="second" distanceunit="meter" totalduration="1472" totaldistance="9830"
+    xmlns="http://www.mihneadb.net/"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema-instance"  xs:schemaLocation="http://www.mihneadb.net/ schema.xsd">
+    <leg toname="afi" fromname="poli" endaddress="Bulevardul Vasile Milea, Bucharest 061344, Romania" startaddress="Bulevardul Iuliu Maniu Iuliu Maniu nr. 10, Bucharest 061073, Romania" duration="225" distance="1400">
+        <step>
+            <instructions>Head west on Bulevardul Iuliu Maniu toward Strada Baia de Arieș</instructions>
+            <duration>16</duration>
+            <distance>267</distance>
+        </step>
+        <step>
+            <instructions>Make a U-turn at Strada Baia de Arieș. Pass by Serviciul Muzici Militare (on the right). </instructions>
+            <duration>174</duration>
+            <distance>760</distance>
+        </step>
+        <step>
+            <instructions>Turn right at Geldautomat onto Bulevardul General Vasile Milea</instructions>
+            <duration>35</duration>
+            <distance>373</distance>
+        </step>
+    </leg>
+    <leg toname="acasa" fromname="afi" endaddress="Strada Glădiței, Bucharest, Romania" startaddress="Bulevardul Vasile Milea, Bucharest 061344, Romania" duration="1247" distance="8430">
+        <step>
+            <instructions>Head south on Bulevardul General Vasile Milea toward Bulevardul Timișoara. Pass by AFI Business 2 (on the right). </instructions>
+            <duration>45</duration>
+            <distance>280</distance>
+        </step>
+        <step>
+            <instructions>Turn left onto Bulevardul Timișoara. Pass by ROMTEHNICA (on the right). </instructions>
+            <duration>154</duration>
+            <distance>543</distance>
+        </step>
+        <step>
+            <instructions>Slight right onto Strada Progresului. Pass by Piața Danny Huwe (on the left). </instructions>
+            <duration>296</duration>
+            <distance>2016</distance>
+        </step>
+        <step>
+            <instructions>Turn left at Wok Away onto Calea Rahovei. Pass by Șoseaua Progresului (on the left). </instructions>
+            <duration>97</duration>
+            <distance>379</distance>
+        </step>
+        <step>
+            <instructions>Continue onto Bulevardul George Coșbuc. Drive along Academia Tehnică Militară (on the right for 280m). </instructions>
+            <duration>79</duration>
+            <distance>737</distance>
+        </step>
+        <step>
+            <instructions>Continue onto Bulevardul Regina Maria. Pass by Volksbank (on the right). </instructions>
+            <duration>72</duration>
+            <distance>981</distance>
+        </step>
+        <step>
+            <instructions>Turn right at Silhouette onto DN6/E70</instructions>
+            <duration>101</duration>
+            <distance>309</distance>
+        </step>
+        <step>
+            <instructions>Slight right onto Bulevardul Dimitrie Cantemir/DN4/DN5. Pass by Caffe Milano (on the right). </instructions>
+            <duration>87</duration>
+            <distance>1270</distance>
+        </step>
+        <step>
+            <instructions>Slight left onto Bulevardul Dimitrie Cantemir</instructions>
+            <duration>28</duration>
+            <distance>55</distance>
+        </step>
+        <step>
+            <instructions>Continue onto Bulevardul Tineretului. Pass by Cicloteque (on the right). </instructions>
+            <duration>145</duration>
+            <distance>1369</distance>
+        </step>
+        <step>
+            <instructions>Continue onto Calea Văcărești. Pass by Alpha Bank (on the right). </instructions>
+            <duration>107</duration>
+            <distance>296</distance>
+        </step>
+        <step>
+            <instructions>Turn right onto Strada Glădiței</instructions>
+            <duration>36</duration>
+            <distance>195</distance>
+        </step>
+    </leg>
+</route>
