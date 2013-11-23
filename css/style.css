@@ -25,8 +25,12 @@ html, body {
     background-color: rgba(0, 0, 0, 0.05);
 }
 
-#tooltip {
+#tooltip, #marker-input-div {
     position: absolute;
     z-index: 100;
     box-shadow: 0px 3px 8px #666;
+}
+
+#marker-input-div input, #marker-input-div button {
+    margin-bottom: 0 !important;
 }
