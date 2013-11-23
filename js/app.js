@@ -126,8 +126,11 @@ function stringify(node) {
 
 function makeXML(nodes) {
     var doc = "<?xml version=\"1.0\" ?>";
-    doc += "<route durationUnit=\"second\" distanceUnit=\"meter\" " +
-        "totalDuration=\"" + totalDuration + "\" totalDistance=\"" + totalDistance + "\">";
+    doc += "<route durationunit=\"second\" distanceunit=\"meter\" " +
+        "totalduration=\"" + totalDuration + "\" totaldistance=\"" + totalDistance + "\"" +
+        " xmlns=\"http://www.mihneadb.net/\" " +
+        " xmlns:xs=\"http://www.w3.org/2001/XMLSchema-instance\" " +
+        " xs:schemaLocation=\"http://www.mihneadb.net/ schema.xsd\">";
 
     nodes.forEach(function (node) {
         doc += stringify(node);
@@ -135,7 +138,7 @@ function makeXML(nodes) {
 
     doc += "</route>";
 
-    return vkbeautify.xml(doc);
+    return vkbeautify.xml(doc.replace(/&nbsp;/g, ""));
 }
 
 function makeLegNode(leg, idx) {
@@ -238,6 +241,10 @@ function initialize() {
         markerInput.onkeydown = function (e) {
             if (e.which == 13) {
                 markerInputBtn.onclick();
+            } else if (e.which == 27) {
+                markerInputDiv.classList.add("hide");
+                waitingForName = false;
+                markerInput.value = "";
             }
         };
     });

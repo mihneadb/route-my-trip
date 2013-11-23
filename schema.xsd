@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+
+<xs:schema
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://www.mihneadb.net/"
+        xmlns="http://www.mihneadb.net/"
+        elementFormDefault="qualified">
+
+    <xs:element name="route">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="leg" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="step" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="instructions" type="xs:string"/>
+                                        <xs:element name="duration" type="xs:integer"/>
+                                        <xs:element name="distance" type="xs:integer"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="toname" type="xs:string"></xs:attribute>
+                        <xs:attribute name="fromname" type="xs:string"></xs:attribute>
+                        <xs:attribute name="startaddress" type="xs:string"></xs:attribute>
+                        <xs:attribute name="endaddress" type="xs:string"></xs:attribute>
+                        <xs:attribute name="distance" type="xs:integer"></xs:attribute>
+                        <xs:attribute name="duration" type="xs:integer"></xs:attribute>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute name="durationunit" type="xs:string"></xs:attribute>
+            <xs:attribute name="distanceunit" type="xs:string"></xs:attribute>
+            <xs:attribute name="totaldistance" type="xs:integer"></xs:attribute>
+            <xs:attribute name="totalduration" type="xs:integer"></xs:attribute>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>
+
