@@ -19,6 +19,8 @@ var markerInputBtn = document.getElementById("marker-input-btn");
 var coordinates = [];
 var markers = [];
 var markerNames = [];
+var totalDistance = 0;
+var totalDuration = 0;
 
 function computeDistance(route) {
     sum = 0;
@@ -84,6 +86,8 @@ function clear() {
     markers = [];
     coordinates = [];
     markerNames = [];
+    totalDistance = 0;
+    totalDuration = 0;
     directionsDisplay.setMap(null);
     distanceText.innerHTML = "";
     if (!exportBtn.classList.contains("hide")) {
@@ -122,7 +126,8 @@ function stringify(node) {
 
 function makeXML(nodes) {
     var doc = "<?xml version=\"1.0\" ?>";
-    doc += "<route durationUnit=\"second\" distanceUnit=\"meter\">";
+    doc += "<route durationUnit=\"second\" distanceUnit=\"meter\" " +
+        "totalDuration=\"" + totalDuration + "\" totalDistance=\"" + totalDistance + "\">";
 
     nodes.forEach(function (node) {
         doc += stringify(node);
@@ -140,6 +145,9 @@ function makeLegNode(leg, idx) {
     var endAddress = leg.end_address; // string
     var fromName = markerNames[idx];
     var toName = markerNames[idx + 1];
+
+    totalDistance += distance;
+    totalDuration += duration;
 
     var node = document.createElement("leg");
     node.setAttribute("distance", distance);
@@ -203,6 +211,8 @@ function initialize() {
         markerInputDiv.classList.toggle("hide");
         markerInputDiv.style.top = mapCanvas.offsetTop + y - markerInputDiv.offsetHeight / 2 + "px";
         markerInputDiv.style.left = mapCanvas.offsetLeft + x / 2 + "px";
+
+        markerInput.focus();
 
         markerInputBtn.onclick = function () {
             markerInputDiv.classList.add("hide");
